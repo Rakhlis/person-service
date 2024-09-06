@@ -3,7 +3,6 @@ package telran.java53.person.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -17,7 +16,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-@Entity
+@Entity(name = "Citizen")
 @Table(name = "persons")
 public class Person implements Serializable {
 	private static final long serialVersionUID = -5244699720272720956L;
