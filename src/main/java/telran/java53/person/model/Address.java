@@ -7,19 +7,16 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
+@Getter
 @EqualsAndHashCode
 @Embeddable
 public class Address implements Serializable {
-	private static final long serialVersionUID = -5233402939990658059L;
+	private static final long serialVersionUID = 8612267464487811786L;
 	
 	String city;
-    String street;
-    Integer building;
-    
+	String street;
+	Integer building;
 }

@@ -19,9 +19,8 @@ import telran.java53.person.service.PersonService;
 @RequestMapping("/person")
 @RequiredArgsConstructor
 public class PersonController {
-	
 	final PersonService personService;
-	
+
 	@PostMapping
 	public Boolean addPerson(@RequestBody PersonDto personDto) {
 		return personService.addPerson(personDto);
@@ -43,7 +42,7 @@ public class PersonController {
 	}
 
 	@PutMapping("/{id}/address")
-	public PersonDto updatePersonAdress(@PathVariable Integer id, @RequestBody AddressDto addressDto) {
+	public PersonDto updatePersonAddress(@PathVariable Integer id, @RequestBody AddressDto addressDto) {
 		return personService.updatePersonAddress(id, addressDto);
 	}
 
@@ -63,8 +62,7 @@ public class PersonController {
 	}
 
 	@GetMapping("/population/city")
-	public Iterable<CityPopulationDto> getCityPopulation() {
+	public Iterable<CityPopulationDto> getCitiesPopulation() {
 		return personService.getCityPopulation();
 	}
-
 }

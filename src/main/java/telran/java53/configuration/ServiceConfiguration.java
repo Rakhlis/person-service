@@ -18,5 +18,5 @@ public class ServiceConfiguration {
 					.setFieldAccessLevel(AccessLevel.PRIVATE);
 		return modelMapper;
 	}
-	
+
 }
