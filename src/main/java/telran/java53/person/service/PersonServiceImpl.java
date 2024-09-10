@@ -60,6 +60,14 @@ public class PersonServiceImpl implements PersonService, CommandLineRunner {
 	@Override
 	public PersonDto removePerson(Integer id) {
 		Person person = personRepository.findById(id).orElseThrow(() -> new PersonNotFoundException());
+		if(person instanceof Employee) {
+			personRepository.delete(person);
+			return modelMapper.map(person, EmployeeDto.class);	
+		}
+		if(person instanceof Child) {
+			personRepository.delete(person);
+			return modelMapper.map(person, ChildDto.class);
+		}
 		personRepository.delete(person);
 		return modelMapper.map(person, PersonDto.class);
 	}
@@ -68,14 +76,31 @@ public class PersonServiceImpl implements PersonService, CommandLineRunner {
 	@Override
 	public PersonDto updatePersonName(Integer id, String name) {
 		Person person = personRepository.findById(id).orElseThrow(() -> new PersonNotFoundException());
+		if(person instanceof Employee) {
+			person.setName(name);
+			return modelMapper.map(person, EmployeeDto.class);	
+		}
+		if(person instanceof Child) {
+			person.setName(name);
+			return modelMapper.map(person, ChildDto.class);
+		}
 		person.setName(name);
 		return modelMapper.map(person, PersonDto.class);
 	}
+	
 
 	@Transactional
 	@Override
 	public PersonDto updatePersonAddress(Integer id, AddressDto addressDto) {
 		Person person = personRepository.findById(id).orElseThrow(() -> new PersonNotFoundException());
+		if(person instanceof Employee) {
+			person.setAddress(modelMapper.map(addressDto, Address.class));
+			return modelMapper.map(person, EmployeeDto.class);
+		}
+		if(person instanceof Child) {
+			person.setAddress(modelMapper.map(addressDto, Address.class));
+			return modelMapper.map(person, ChildDto.class);
+		}
 		person.setAddress(modelMapper.map(addressDto, Address.class));
 		return modelMapper.map(person, PersonDto.class);
 	}
@@ -124,5 +149,22 @@ public class PersonServiceImpl implements PersonService, CommandLineRunner {
 		}
 
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Iterable<EmployeeDto> findEmployeeBySalary(int min, int max) {
+		return personRepository.findBySalaryBetween(min, max)
+				.map(p -> modelMapper.map(p, EmployeeDto.class))
+				.toList();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Iterable<ChildDto> getChildren() {
+		return personRepository.findChildrenBy()
+				.map(c -> modelMapper.map(c, ChildDto.class))
+				.toList();
+	}
+
 
 }
